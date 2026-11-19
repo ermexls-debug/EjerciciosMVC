@@ -1,10 +1,10 @@
 ﻿@model PasswordGeneratorViewModel
 
 @{
-    ViewData["Title"] = "Generador de contraseña";
+    ViewData["Title"] = "Generador de contraseñas";
 }
 
-<h1>Generador de contraseña</h1>
+<h1>Generador de contraseñas</h1>
 
 <div class="row">
     <div class="col-md-5">
@@ -16,33 +16,25 @@
                 <label asp-for="PasswordLength" class="form-label"></label>
                 <input asp-for="PasswordLength" class="form-control" type="number" step="1" />
                 <span asp-validation-for="PasswordLength" class="text-danger"></span>
-            </div>
-
-            <div class="mb-3">
+            
                 
                 <div class="form-check">
                     <input asp-for="IncludeUppercase" class="form-check-input" />
                     <label asp-for="IncludeUppercase" class="form-check-label"></label>
                 </div>
-            </div>
-
-            <div class="mb-3">
+            
 
                 <div class="form-check">
                     <input asp-for="IncludeLowercase" class="form-check-input" />
                     <label asp-for="IncludeLowercase" class="form-check-label"></label>
                 </div>
-            </div>
-
-            <div class="mb-3">
+            
 
                 <div class="form-check">
                     <input asp-for="IncludeNumbers" class="form-check-input" />
                     <label asp-for="IncludeNumbers" class="form-check-label"></label>
                 </div>
-            </div>
-
-            <div class="mb-3">
+            
 
                 <div class="form-check">
                     <input asp-for="IncludeSymbols" class="form-check-input" />
@@ -50,7 +42,7 @@
                 </div>               
             </div>
 
-            <button type="submit" class="btn btn-primary">Calcular</button>
+            <button type="submit" class="btn btn-primary">Generar contraseña</button>
         </form>
     </div>
 </div>
