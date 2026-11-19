@@ -10,7 +10,7 @@ namespace EjerciciosMVC.Web.Models
         [Display (Name ="Longitud de la contraseña")]
         public int? PasswordLength { get; set; }
 
-        [Display(Name = "mayúsculas A - Z")]
+        [Display(Name = "Mayúsculas A - Z")]
         public bool IncludeUppercase { get; set; } = true;
 
         [Display(Name = "Minúsculas a - z")]

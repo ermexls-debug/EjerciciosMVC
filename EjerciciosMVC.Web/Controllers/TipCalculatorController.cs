@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EjerciciosMVC.Web.Controllers
 {
-    public class TipsController : Controller
+    public class TipCalculatorController : Controller
     {
         [HttpGet]
         public IActionResult Index()

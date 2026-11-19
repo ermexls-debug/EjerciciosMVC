@@ -1,0 +1,68 @@
+﻿@model PasswordGeneratorViewModel
+
+@{
+    ViewData["Title"] = "Generador de contraseña";
+}
+
+<h1>Generador de contraseña</h1>
+
+<div class="row">
+    <div class="col-md-5">
+        <form asp-action="Index" method="post">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="PasswordLength" class="form-label"></label>
+                <input asp-for="PasswordLength" class="form-control" type="number" step="1" />
+                <span asp-validation-for="PasswordLength" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                
+                <div class="form-check">
+                    <input asp-for="IncludeUppercase" class="form-check-input" />
+                    <label asp-for="IncludeUppercase" class="form-check-label"></label>
+                </div>
+            </div>
+
+            <div class="mb-3">
+
+                <div class="form-check">
+                    <input asp-for="IncludeLowercase" class="form-check-input" />
+                    <label asp-for="IncludeLowercase" class="form-check-label"></label>
+                </div>
+            </div>
+
+            <div class="mb-3">
+
+                <div class="form-check">
+                    <input asp-for="IncludeNumbers" class="form-check-input" />
+                    <label asp-for="IncludeNumbers" class="form-check-label"></label>
+                </div>
+            </div>
+
+            <div class="mb-3">
+
+                <div class="form-check">
+                    <input asp-for="IncludeSymbols" class="form-check-input" />
+                    <label asp-for="IncludeSymbols" class="form-check-label"></label>
+                </div>               
+            </div>
+
+            <button type="submit" class="btn btn-primary">Calcular</button>
+        </form>
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.Result))
+{
+    <div class="alert alert-success mt-4 col-md-5">
+        <p>Tu contraseña:</p>
+        <p><strong>@Model.Result</strong></p>
+    </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

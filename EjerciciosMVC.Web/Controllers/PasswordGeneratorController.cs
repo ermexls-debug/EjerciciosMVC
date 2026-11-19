@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EjerciciosMVC.Web.Controllers
 {
-    public class PasswordsGeneratorController : Controller
+    public class PasswordGeneratorController : Controller
     {
         [HttpGet]
         public IActionResult Index()
