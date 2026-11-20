@@ -1,0 +1,14 @@
+﻿using EjerciciosMVC.Web.Data.Entities;
+using Microsoft.EntityFrameworkCore;
+
+namespace EjerciciosMVC.Web.Data
+{
+    public class DataContext : DbContext
+    {
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        {
+        
+        }
+        public DbSet<TodoTask> TodoTasks { get; set; }
+    }
+}
