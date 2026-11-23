@@ -191,6 +191,109 @@ namespace EjerciciosMVC.Web.Migrations
                         });
                 });
 
+            modelBuilder.Entity("EjerciciosMVC.Web.Data.Entities.Reservation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CustomerName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("CustomerPhone")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<DateTime>("EndAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ServiceId");
+
+                    b.HasIndex("StartAt");
+
+                    b.ToTable("Reservations");
+                });
+
+            modelBuilder.Entity("EjerciciosMVC.Web.Data.Entities.Service", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("DurationMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(12,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Services");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DurationMinutes = 30,
+                            Name = "Corte de cabello",
+                            Price = 25000m
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DurationMinutes = 30,
+                            Name = "Arreglo de barba",
+                            Price = 15000m
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DurationMinutes = 60,
+                            Name = "Corte y barba",
+                            Price = 35000m
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DurationMinutes = 60,
+                            Name = "Manicure",
+                            Price = 30000m
+                        },
+                        new
+                        {
+                            Id = 5,
+                            DurationMinutes = 90,
+                            Name = "Masaje relajante",
+                            Price = 80000m
+                        });
+                });
+
             modelBuilder.Entity("EjerciciosMVC.Web.Data.Entities.TodoTask", b =>
                 {
                     b.Property<int>("Id")
@@ -237,6 +340,17 @@ namespace EjerciciosMVC.Web.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("EjerciciosMVC.Web.Data.Entities.Reservation", b =>
+                {
+                    b.HasOne("EjerciciosMVC.Web.Data.Entities.Service", "Service")
+                        .WithMany("Reservations")
+                        .HasForeignKey("ServiceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Service");
+                });
+
             modelBuilder.Entity("EjerciciosMVC.Web.Data.Entities.ExpenseCategory", b =>
                 {
                     b.Navigation("Expenses");
@@ -245,6 +359,11 @@ namespace EjerciciosMVC.Web.Migrations
             modelBuilder.Entity("EjerciciosMVC.Web.Data.Entities.NoteCategory", b =>
                 {
                     b.Navigation("Notes");
+                });
+
+            modelBuilder.Entity("EjerciciosMVC.Web.Data.Entities.Service", b =>
+                {
+                    b.Navigation("Reservations");
                 });
 #pragma warning restore 612, 618
         }
