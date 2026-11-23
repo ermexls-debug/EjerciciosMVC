@@ -28,7 +28,7 @@ namespace EjerciciosMVC.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create (ToDoTaskListViewModel model)
         {
-            if (ModelState.IsValid) 
+            if (!ModelState.IsValid) 
             {
                 model.Tasks = await _context.TodoTasks.OrderByDescending(t => t.CreatedAt).ToListAsync();
                 return View("Index", model);
