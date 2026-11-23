@@ -22,6 +22,98 @@ namespace EjerciciosMVC.Web.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("EjerciciosMVC.Web.Data.Entities.Expense", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(12,2)");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Expenses");
+                });
+
+            modelBuilder.Entity("EjerciciosMVC.Web.Data.Entities.ExpenseCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("ExpenseCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Alimentación"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Transporte"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Vivienda"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Servicios públicos"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Salud"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Educación"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Entretenimiento"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Otros"
+                        });
+                });
+
             modelBuilder.Entity("EjerciciosMVC.Web.Data.Entities.Note", b =>
                 {
                     b.Property<int>("Id")
@@ -123,6 +215,17 @@ namespace EjerciciosMVC.Web.Migrations
                     b.ToTable("TodoTasks");
                 });
 
+            modelBuilder.Entity("EjerciciosMVC.Web.Data.Entities.Expense", b =>
+                {
+                    b.HasOne("EjerciciosMVC.Web.Data.Entities.ExpenseCategory", "Category")
+                        .WithMany("Expenses")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("EjerciciosMVC.Web.Data.Entities.Note", b =>
                 {
                     b.HasOne("EjerciciosMVC.Web.Data.Entities.NoteCategory", "Category")
@@ -132,6 +235,11 @@ namespace EjerciciosMVC.Web.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("EjerciciosMVC.Web.Data.Entities.ExpenseCategory", b =>
+                {
+                    b.Navigation("Expenses");
                 });
 
             modelBuilder.Entity("EjerciciosMVC.Web.Data.Entities.NoteCategory", b =>
