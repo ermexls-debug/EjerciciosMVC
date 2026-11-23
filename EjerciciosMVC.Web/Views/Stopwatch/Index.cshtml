@@ -1,0 +1,41 @@
+@{
+    ViewData["Title"] = "Cronómetro";
+}
+
+<h1>Cronómetro</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-body text-center">
+                <div id="display" class="display-3 font-monospace mb-3">00:00.00</div>
+                <div class="d-flex justify-content-center gap-2">
+                    <button type="button" id="startButton" class="btn btn-success">Iniciar</button>
+                    <button type="button" id="pauseButton" class="btn btn-warning" disabled>Pausar</button>
+                    <button type="button" id="lapButton" class="btn btn-primary" disabled>Vuelta</button>
+                    <button type="button" id="resetButton" class="btn btn-outline-danger" disabled>Reiniciar</button>
+                </div>
+                <small class="text-muted d-block mt-3">Atajos: barra espaciadora para iniciar o pausar, tecla V para marcar una vuelta</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <h4>Vueltas</h4>
+        <p id="lapsEmpty" class="text-muted">Todavía no hay vueltas registradas.</p>
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th>Vuelta</th>
+                    <th>Tiempo de la vuelta</th>
+                    <th>Tiempo total</th>
+                </tr>
+            </thead>
+            <tbody id="lapsBody"></tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/stopwatch.js" asp-append-version="true"></script>
+}
