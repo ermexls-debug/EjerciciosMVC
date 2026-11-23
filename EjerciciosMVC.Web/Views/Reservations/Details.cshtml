@@ -1,0 +1,40 @@
+@model Reservation
+
+@{
+    ViewData["Title"] = "Reserva";
+
+    string statusText = "Pendiente de confirmación";
+    string statusClass = "bg-warning text-dark";
+
+    if (Model.Status == ReservationStatus.Confirmed)
+    {
+        statusText = "Confirmada";
+        statusClass = "bg-success";
+    }
+    else if (Model.Status == ReservationStatus.Cancelled)
+    {
+        statusText = "Cancelada";
+        statusClass = "bg-secondary";
+    }
+}
+
+<h1>Reserva #@Model.Id</h1>
+
+<partial name="_Messages" />
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <div class="card-body">
+                <p><span class="badge @statusClass">@statusText</span></p>
+                <p class="mb-1"><strong>Cliente:</strong> @Model.CustomerName</p>
+                <p class="mb-1"><strong>Teléfono:</strong> @Model.CustomerPhone</p>
+                <p class="mb-1"><strong>Servicio:</strong> @Model.Service?.Name</p>
+                <p class="mb-1"><strong>Fecha:</strong> @Model.StartAt.ToString("dd/MM/yyyy")</p>
+                <p class="mb-0"><strong>Hora:</strong> @Model.StartAt.ToString("hh:mm tt", System.Globalization.CultureInfo.InvariantCulture) a @Model.EndAt.ToString("hh:mm tt", System.Globalization.CultureInfo.InvariantCulture)</p>
+            </div>
+        </div>
+
+        <a asp-action="Index" class="btn btn-outline-secondary">Hacer otra reserva</a>
+    </div>
+</div>

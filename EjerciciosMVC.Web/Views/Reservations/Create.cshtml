@@ -1,0 +1,45 @@
+@model ReservationFormViewModel
+
+@{
+    ViewData["Title"] = "Datos de la reserva";
+}
+
+<h1>Datos de la reserva</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-body">
+                <p class="mb-1"><strong>Servicio:</strong> @Model.ServiceName</p>
+                <p class="mb-1"><strong>Fecha:</strong> @Model.StartAt.ToString("dd/MM/yyyy")</p>
+                <p class="mb-1"><strong>Hora:</strong> @Model.StartAt.ToString("hh:mm tt", System.Globalization.CultureInfo.InvariantCulture)</p>
+                <p class="mb-1"><strong>Duración:</strong> @Model.DurationMinutes minutos</p>
+                <p class="mb-0"><strong>Precio:</strong> $@Model.Price.ToString("N0")</p>
+            </div>
+        </div>
+
+        <form asp-action="Create" method="post">
+            <input type="hidden" asp-for="ServiceId" />
+            <input type="hidden" name="StartAt" value="@Model.StartAt.ToString("yyyy-MM-ddTHH:mm")" />
+
+            <div class="mb-3">
+                <label asp-for="CustomerName" class="form-label"></label>
+                <input asp-for="CustomerName" class="form-control" />
+                <span asp-validation-for="CustomerName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="CustomerPhone" class="form-label"></label>
+                <input asp-for="CustomerPhone" class="form-control" />
+                <span asp-validation-for="CustomerPhone" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Reservar</button>
+            <a asp-action="Index" asp-route-serviceId="@Model.ServiceId" asp-route-date="@Model.StartAt.ToString("yyyy-MM-dd")" class="btn btn-outline-secondary">Escoger otro horario</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

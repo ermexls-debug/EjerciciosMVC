@@ -1,0 +1,43 @@
+@model ReservationSearchViewModel
+
+@{
+    ViewData["Title"] = "Reservas";
+}
+
+<h1>Reservar una cita</h1>
+
+<partial name="_Messages" />
+
+<form asp-action="Index" method="get" class="row g-2 mb-4">
+    <div class="col-md-5">
+        <label asp-for="ServiceId" class="form-label"></label>
+        <select asp-for="ServiceId" asp-items="Model.Services" class="form-select">
+            <option value="">-- Seleccione --</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label asp-for="Date" class="form-label"></label>
+        <input asp-for="Date" class="form-control" />
+    </div>
+    <div class="col-md-4 d-flex align-items-end">
+        <button type="submit" class="btn btn-primary">Ver disponibilidad</button>
+    </div>
+</form>
+
+@if (Model.Message != null)
+{
+    <div class="alert alert-warning">@Model.Message</div>
+}
+
+@if (Model.SelectedService != null && Model.AvailableSlots.Count > 0)
+{
+    <h4>Horarios disponibles para @Model.SelectedService.Name</h4>
+    <p class="text-muted">@Model.DateText · Duración: @Model.SelectedService.DurationMinutes minutos · Precio: $@Model.SelectedService.Price.ToString("N0")</p>
+
+    <div class="d-flex flex-wrap gap-2">
+        @foreach (DateTime slot in Model.AvailableSlots)
+        {
+            <a asp-action="Create" asp-route-serviceId="@Model.SelectedService.Id" asp-route-start="@slot.ToString("yyyy-MM-ddTHH:mm")" class="btn btn-outline-success">@slot.ToString("hh:mm tt", System.Globalization.CultureInfo.InvariantCulture)</a>
+        }
+    </div>
+}
