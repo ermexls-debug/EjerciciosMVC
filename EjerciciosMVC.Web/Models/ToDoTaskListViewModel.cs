@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EjerciciosMVC.Web.Models
 {
-    public class ToDoTaskListViewModel
+    public class TodoTaskListViewModel
     {
         [Required (ErrorMessage = "Escriba la tarea")]
         [MaxLength (200, ErrorMessage = "La tarea no puede tener más de 200 caracteres")]

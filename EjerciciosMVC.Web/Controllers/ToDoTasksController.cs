@@ -19,18 +19,18 @@ namespace EjerciciosMVC.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         { 
-            ToDoTaskListViewModel model = new ToDoTaskListViewModel();
-            model.Tasks = await _context.TodoTasks.OrderByDescending (t => t.CreatedAt).ToListAsync();
+            TodoTaskListViewModel model = new TodoTaskListViewModel();
+            model.Tasks = await _context.TodoTasks.OrderBy(t => t.IsCompleted).ThenByDescending(t => t.CreatedAt).ToListAsync();
             return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create (ToDoTaskListViewModel model)
+        public async Task<IActionResult> Create (TodoTaskListViewModel model)
         {
             if (!ModelState.IsValid) 
             {
-                model.Tasks = await _context.TodoTasks.OrderByDescending(t => t.CreatedAt).ToListAsync();
+                model.Tasks = await _context.TodoTasks.OrderBy(t => t.IsCompleted).ThenByDescending(t => t.CreatedAt).ToListAsync();
                 return View("Index", model);
             }
             TodoTask task = new TodoTask
