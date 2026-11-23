@@ -1,0 +1,14 @@
+@model ReservationStatus
+
+@if (Model == ReservationStatus.Confirmed)
+{
+    <span class="badge bg-success">Confirmada</span>
+}
+else if (Model == ReservationStatus.Cancelled)
+{
+    <span class="badge bg-secondary">Cancelada</span>
+}
+else
+{
+    <span class="badge bg-warning text-dark">Pendiente de confirmación</span>
+}

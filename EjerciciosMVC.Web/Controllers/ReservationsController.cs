@@ -138,6 +138,66 @@ namespace EjerciciosMVC.Web.Controllers
             return View(reservation);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Confirm(int id)
+        {
+            Reservation? reservation = await _context.Reservations.FindAsync(id);
+
+            if (reservation == null)
+            {
+                return NotFound();
+            }
+
+            if (reservation.Status != ReservationStatus.Pending)
+            {
+                TempData["Error"] = "Solo se pueden confirmar reservas pendientes";
+                return RedirectToAction(nameof(Details), new { id = id });
+            }
+
+            reservation.Status = ReservationStatus.Confirmed;
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "¡Reserva confirmada!";
+            return RedirectToAction(nameof(Details), new { id = id });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Cancel(int id)
+        {
+            Reservation? reservation = await _context.Reservations.FindAsync(id);
+
+            if (reservation == null)
+            {
+                return NotFound();
+            }
+
+            if (reservation.Status == ReservationStatus.Cancelled)
+            {
+                TempData["Error"] = "La reserva ya estaba cancelada";
+                return RedirectToAction(nameof(Details), new { id = id });
+            }
+
+            reservation.Status = ReservationStatus.Cancelled;
+            await _context.SaveChangesAsync();
+
+            TempData["Success"] = "Reserva cancelada. El horario quedó libre";
+            return RedirectToAction(nameof(Details), new { id = id });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> List()
+        {
+            List<Reservation> reservations = await _context.Reservations
+                .Include(r => r.Service)
+                .Where(r => r.StartAt >= DateTime.Today)
+                .OrderBy(r => r.StartAt)
+                .ToListAsync();
+
+            return View(reservations);
+        }
+
         private void FillServiceData(ReservationFormViewModel model, Service service, DateTime start)
         {
             model.ServiceId = service.Id;
