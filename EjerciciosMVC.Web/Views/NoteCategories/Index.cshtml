@@ -1,0 +1,53 @@
+@model NoteCategoryListViewModel
+
+@{
+    ViewData["Title"] = "Categorías de notas";
+}
+
+<h1>Categorías de notas</h1>
+
+<partial name="_Messages" />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" method="post" class="mb-4">
+            <div class="mb-3">
+                <label asp-for="NewName" class="form-label"></label>
+                <input asp-for="NewName" class="form-control" />
+                <span asp-validation-for="NewName" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Agregar</button>
+        </form>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Categoría</th>
+                    <th>Notas</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (NoteCategoryItemViewModel category in Model.Categories)
+                {
+                    <tr>
+                        <td>@category.Name</td>
+                        <td>@category.NoteCount</td>
+                        <td class="text-end">
+                            @if (category.NoteCount == 0)
+                            {
+                                <form asp-action="Delete" asp-route-id="@category.Id" method="post" onsubmit="return confirm('¿Eliminar esta categoría?');">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

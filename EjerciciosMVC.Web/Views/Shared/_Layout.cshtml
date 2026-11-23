@@ -26,14 +26,14 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="TipCalculator" asp-action="Index">Propinas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="PasswordGenerator" asp-action="Index">Contraseñas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-controller="TodoTasks" asp-action="Index">Tareas</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Ejercicios</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-controller="ToDoTasks" asp-action="Index">1. Lista de tareas</a></li>
+                                <li><a class="dropdown-item" asp-controller="TipCalculator" asp-action="Index">2. Calculadora de propinas</a></li>
+                                <li><a class="dropdown-item" asp-controller="PasswordGenerator" asp-action="Index">3. Generador de contraseñas</a></li>
+                                <li><a class="dropdown-item" asp-controller="NoteCategories" asp-action="Index">6. Categorías de notas</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
