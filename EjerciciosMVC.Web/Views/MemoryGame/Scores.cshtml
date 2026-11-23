@@ -1,0 +1,50 @@
+@model MemoryScoresViewModel
+
+@{
+    ViewData["Title"] = "Mejores puntajes";
+}
+
+<h1>Mejores puntajes - @Model.LevelName</h1>
+
+<partial name="_Messages" />
+
+<div class="mb-3">
+    <a asp-action="Scores" asp-route-level="Easy" class="btn btn-sm @(Model.Level == GameLevel.Easy ? "btn-primary" : "btn-outline-primary")">Fácil</a>
+    <a asp-action="Scores" asp-route-level="Medium" class="btn btn-sm @(Model.Level == GameLevel.Medium ? "btn-primary" : "btn-outline-primary")">Medio</a>
+    <a asp-action="Scores" asp-route-level="Hard" class="btn btn-sm @(Model.Level == GameLevel.Hard ? "btn-primary" : "btn-outline-primary")">Difícil</a>
+    <a asp-action="Index" asp-route-level="@Model.Level" class="btn btn-sm btn-success ms-2">Jugar</a>
+</div>
+
+@if (Model.Scores.Count == 0)
+{
+    <p class="text-muted">Todavía no hay puntajes en este nivel. ¡Sé el primero!</p>
+}
+else
+{
+    <table class="table table-striped" style="max-width: 700px;">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Jugador</th>
+                <th class="text-end">Puntos</th>
+                <th class="text-end">Movimientos</th>
+                <th class="text-end">Tiempo</th>
+                <th>Fecha</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Scores.Count; i++)
+            {
+                GameScore score = Model.Scores[i];
+                <tr>
+                    <td>@(i + 1)</td>
+                    <td>@score.PlayerName</td>
+                    <td class="text-end"><strong>@score.Points</strong></td>
+                    <td class="text-end">@score.Moves</td>
+                    <td class="text-end">@score.Seconds s</td>
+                    <td>@score.PlayedAt.ToString("dd/MM/yyyy")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

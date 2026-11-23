@@ -33,11 +33,14 @@
 
 <h1>Juego de memoria</h1>
 
+<partial name="_Messages" />
+
 <div class="mb-3">
     <span class="me-2">Nivel:</span>
     <a asp-action="Index" asp-route-level="Easy" class="btn btn-sm @(Model.Level == GameLevel.Easy ? "btn-primary" : "btn-outline-primary")">Fácil (6 parejas)</a>
     <a asp-action="Index" asp-route-level="Medium" class="btn btn-sm @(Model.Level == GameLevel.Medium ? "btn-primary" : "btn-outline-primary")">Medio (8 parejas)</a>
     <a asp-action="Index" asp-route-level="Hard" class="btn btn-sm @(Model.Level == GameLevel.Hard ? "btn-primary" : "btn-outline-primary")">Difícil (12 parejas)</a>
+    <a asp-action="Scores" asp-route-level="@Model.Level" class="btn btn-sm btn-outline-success ms-2">Mejores puntajes</a>
 </div>
 
 <div class="d-flex gap-4 mb-3">
@@ -58,6 +61,19 @@
     <h4>¡Ganaste!</h4>
     <p class="mb-2">Lo lograste en <strong id="winMoves"></strong> movimientos y <strong id="winTime"></strong> segundos.</p>
     <p class="mb-3">Puntaje: <strong id="winPoints"></strong></p>
+
+    <form asp-action="SaveScore" method="post" class="row g-2 mb-3">
+        <input type="hidden" name="Level" value="@Model.Level" />
+        <input type="hidden" id="scoreMoves" name="Moves" />
+        <input type="hidden" id="scoreSeconds" name="Seconds" />
+        <div class="col-auto">
+            <input type="text" name="PlayerName" class="form-control" placeholder="Su nombre" maxlength="30" required />
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Guardar puntaje</button>
+        </div>
+    </form>
+
     <a asp-action="Index" asp-route-level="@Model.Level" class="btn btn-success">Jugar otra vez</a>
 </div>
 

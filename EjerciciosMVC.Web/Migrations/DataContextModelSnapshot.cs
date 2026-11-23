@@ -114,6 +114,39 @@ namespace EjerciciosMVC.Web.Migrations
                         });
                 });
 
+            modelBuilder.Entity("EjerciciosMVC.Web.Data.Entities.GameScore", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Moves")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("PlayedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PlayerName")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Seconds")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GameScores");
+                });
+
             modelBuilder.Entity("EjerciciosMVC.Web.Data.Entities.Note", b =>
                 {
                     b.Property<int>("Id")

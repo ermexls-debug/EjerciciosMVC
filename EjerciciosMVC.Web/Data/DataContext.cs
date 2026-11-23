@@ -23,6 +23,8 @@ namespace EjerciciosMVC.Web.Data
 
         public DbSet<Reservation> Reservations { get; set; }
 
+        public DbSet<GameScore> GameScores { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

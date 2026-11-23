@@ -49,9 +49,13 @@
 
     function finishGame() {
         stopTimer();
+        seconds = Math.max(1, seconds);
+        timeText.textContent = seconds;
         document.getElementById("winMoves").textContent = moves;
         document.getElementById("winTime").textContent = seconds;
         document.getElementById("winPoints").textContent = calculatePoints();
+        document.getElementById("scoreMoves").value = moves;
+        document.getElementById("scoreSeconds").value = seconds;
         winPanel.style.display = "block";
     }
 
