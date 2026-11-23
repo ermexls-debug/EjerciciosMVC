@@ -1,4 +1,4 @@
-@model NoteCategoryListViewModel
+﻿@model NoteCategoryListViewModel
 
 @{
     ViewData["Title"] = "Categorías de notas";
@@ -17,6 +17,7 @@
                 <span asp-validation-for="NewName" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-primary">Agregar</button>
+            <a asp-controller="Notes" asp-action="Index" class="btn btn-outline-secondary">Volver a las notas</a>
         </form>
 
         <table class="table">

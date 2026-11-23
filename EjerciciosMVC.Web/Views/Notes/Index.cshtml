@@ -1,0 +1,62 @@
+@model NoteListViewModel
+
+@{
+    ViewData["Title"] = "Notas";
+}
+
+<h1>Notas</h1>
+
+<partial name="_Messages" />
+
+<div class="mb-3">
+    <a asp-action="Create" class="btn btn-primary">Nueva nota</a>
+    <a asp-controller="NoteCategories" asp-action="Index" class="btn btn-outline-secondary">Categorías</a>
+</div>
+
+<form asp-action="Index" method="get" class="row g-2 mb-4">
+    <div class="col-md-5">
+        <input asp-for="Search" class="form-control" placeholder="Buscar en el título o el contenido" />
+    </div>
+    <div class="col-md-3">
+        <select asp-for="CategoryId" asp-items="Model.Categories" class="form-select">
+            <option value="">Todas las categorías</option>
+        </select>
+    </div>
+    <div class="col-md-4">
+        <button type="submit" class="btn btn-outline-primary">Buscar</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Limpiar</a>
+    </div>
+</form>
+
+@if (Model.Notes.Count == 0)
+{
+    <p class="text-muted">No se encontraron notas.</p>
+}
+else
+{
+    <p>Notas encontradas: <strong>@Model.Notes.Count</strong></p>
+
+    <div class="row">
+        @foreach (Note note in Model.Notes)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <span class="badge bg-secondary mb-2">@note.Category?.Name</span>
+                        <h5 class="card-title">@note.Title</h5>
+                        <p class="card-text" style="white-space: pre-line;">@note.Content</p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        <small class="text-muted">@note.UpdatedAt.ToString("dd/MM/yyyy HH:mm")</small>
+                        <div class="d-flex gap-2">
+                            <a asp-action="Edit" asp-route-id="@note.Id" class="btn btn-sm btn-outline-primary">Editar</a>
+                            <form asp-action="Delete" asp-route-id="@note.Id" method="post" onsubmit="return confirm('¿Eliminar esta nota?');">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
