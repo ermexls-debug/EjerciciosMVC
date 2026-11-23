@@ -22,6 +22,83 @@ namespace EjerciciosMVC.Web.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("EjerciciosMVC.Web.Data.Entities.Note", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Notes");
+                });
+
+            modelBuilder.Entity("EjerciciosMVC.Web.Data.Entities.NoteCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("NoteCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Personal"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Estudio"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Trabajo"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Ideas"
+                        });
+                });
+
             modelBuilder.Entity("EjerciciosMVC.Web.Data.Entities.TodoTask", b =>
                 {
                     b.Property<int>("Id")
@@ -44,6 +121,22 @@ namespace EjerciciosMVC.Web.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TodoTasks");
+                });
+
+            modelBuilder.Entity("EjerciciosMVC.Web.Data.Entities.Note", b =>
+                {
+                    b.HasOne("EjerciciosMVC.Web.Data.Entities.NoteCategory", "Category")
+                        .WithMany("Notes")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("EjerciciosMVC.Web.Data.Entities.NoteCategory", b =>
+                {
+                    b.Navigation("Notes");
                 });
 #pragma warning restore 612, 618
         }
