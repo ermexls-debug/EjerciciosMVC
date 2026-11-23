@@ -26,9 +26,33 @@
             <ul class="list-group">
                 @foreach (TodoTask task in Model.Tasks)
                 {
-                    <li class="list-group-item">
-                        @task.Title
-                        <small class="text-muted d-block">@task.CreatedAt.ToString("dd/MM/yyyy HH:mm")</small>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            @if (task.IsCompleted)
+                            {
+                                <span class="text-decoration-line-through text-muted">@task.Title</span>
+                            }
+                            else
+                            {
+                                <span>@task.Title</span>
+                            }
+                            <small class="text-muted d-block">@task.CreatedAt.ToString("dd/MM/yyyy HH:mm")</small>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <form asp-action="ToggleComplete" asp-route-id="@task.Id" method="post">
+                                @if (task.IsCompleted)
+                                {
+                                    <button type="submit" class="btn btn-sm btn-outline-secondary">Desmarcar</button>
+                                }
+                                else
+                                {
+                                    <button type="submit" class="btn btn-sm btn-outline-success">Completar</button>
+                                }
+                            </form>
+                            <form asp-action="Delete" asp-route-id="@task.Id" method="post" onsubmit="return confirm('¿Eliminar esta tarea?');">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
+                            </form>
+                        </div>
                     </li>
                 }
             </ul>

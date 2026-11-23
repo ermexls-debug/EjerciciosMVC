@@ -45,5 +45,39 @@ namespace EjerciciosMVC.Web.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ToggleComplete(int id)
+        {
+            TodoTask? task = await _context.TodoTasks.FindAsync(id);
+
+            if (task == null)
+            {
+                return NotFound();
+            }
+
+            task.IsCompleted = !task.IsCompleted;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Delete(int id)
+        {
+            TodoTask? task = await _context.TodoTasks.FindAsync(id);
+
+            if (task == null)
+            {
+                return NotFound();
+            }
+
+            _context.TodoTasks.Remove(task);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
