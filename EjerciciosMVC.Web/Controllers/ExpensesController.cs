@@ -99,6 +99,50 @@ namespace EjerciciosMVC.Web.Controllers
             return RedirectToAction(nameof(Index), new { year = expense.Date.Year, month = expense.Date.Month });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Summary(int? year, int? month)
+        {
+            DateTime monthStart = GetMonthStart(year, month);
+            DateTime monthEnd = monthStart.AddMonths(1);
+
+            List<ExpenseCategoryTotalViewModel> categories = await _context.Expenses
+                .Where(e => e.Date >= monthStart && e.Date < monthEnd)
+                .GroupBy(e => e.Category!.Name)
+                .Select(g => new ExpenseCategoryTotalViewModel
+                {
+                    CategoryName = g.Key,
+                    Total = g.Sum(e => e.Amount),
+                    Count = g.Count()
+                })
+                .OrderByDescending(c => c.Total)
+                .ToListAsync();
+
+            decimal total = categories.Sum(c => c.Total);
+
+            foreach (ExpenseCategoryTotalViewModel category in categories)
+            {
+                category.Percentage = Math.Round(category.Total * 100 / total, 1);
+            }
+
+            int days = DateTime.DaysInMonth(monthStart.Year, monthStart.Month);
+
+            if (monthStart.Year == DateTime.Today.Year && monthStart.Month == DateTime.Today.Month)
+            {
+                days = DateTime.Today.Day;
+            }
+
+            ExpenseSummaryViewModel model = new ExpenseSummaryViewModel
+            {
+                MonthStart = monthStart,
+                Total = total,
+                ExpenseCount = categories.Sum(c => c.Count),
+                DailyAverage = Math.Round(total / days, 0),
+                Categories = categories
+            };
+
+            return View(model);
+        }
+
         private DateTime GetMonthStart(int? year, int? month)
         {
             DateTime today = DateTime.Today;

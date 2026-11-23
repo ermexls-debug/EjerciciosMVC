@@ -1,0 +1,79 @@
+@model ExpenseSummaryViewModel
+
+@{
+    ViewData["Title"] = "Resumen de gastos";
+}
+
+<h1>Resumen de @Model.MonthName</h1>
+
+<div class="d-flex justify-content-between mb-4">
+    <div>
+        <a asp-action="Summary" asp-route-year="@Model.PreviousMonth.Year" asp-route-month="@Model.PreviousMonth.Month" class="btn btn-outline-secondary">&larr; Mes anterior</a>
+        <a asp-action="Summary" asp-route-year="@Model.NextMonth.Year" asp-route-month="@Model.NextMonth.Month" class="btn btn-outline-secondary">Mes siguiente &rarr;</a>
+    </div>
+    <div>
+        <a asp-action="Index" asp-route-year="@Model.MonthStart.Year" asp-route-month="@Model.MonthStart.Month" class="btn btn-outline-primary">Ver gastos del mes</a>
+    </div>
+</div>
+
+@if (Model.ExpenseCount == 0)
+{
+    <p class="text-muted">No hay gastos registrados en este mes.</p>
+}
+else
+{
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Total del mes</p>
+                    <h3>$@Model.Total.ToString("N0")</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Cantidad de gastos</p>
+                    <h3>@Model.ExpenseCount</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <p class="text-muted mb-1">Promedio por día</p>
+                    <h3>$@Model.DailyAverage.ToString("N0")</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h4>Gastos por categoría</h4>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Categoría</th>
+                <th class="text-end">Gastos</th>
+                <th class="text-end">Total</th>
+                <th style="width: 40%;">Porcentaje</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ExpenseCategoryTotalViewModel category in Model.Categories)
+            {
+                <tr>
+                    <td>@category.CategoryName</td>
+                    <td class="text-end">@category.Count</td>
+                    <td class="text-end">$@category.Total.ToString("N0")</td>
+                    <td>
+                        <div class="progress" style="height: 22px;">
+                            <div class="progress-bar" role="progressbar" style="width: @category.Percentage.ToString(System.Globalization.CultureInfo.InvariantCulture)%;">@category.Percentage%</div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
