@@ -6,12 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EjerciciosMVC.Web.Controllers
 {
-    public class ToDoTasksController : Controller
+    public class TodoTasksController : Controller
     {
 
         private readonly DataContext _context;
 
-        public ToDoTasksController (DataContext context)
+        public TodoTasksController (DataContext context)
         {
             _context = context;
         }
