@@ -16,10 +16,33 @@ namespace EjerciciosMVC.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(RecipeListViewModel filters)
         {
-            List<Recipe> recipes = await _context.Recipes.OrderBy(r => r.Name).ToListAsync();
-            return View(recipes);
+            IQueryable<Recipe> query = _context.Recipes;
+
+            if (!string.IsNullOrWhiteSpace(filters.Search))
+            {
+                query = query.Where(r => r.Name.Contains(filters.Search));
+            }
+
+            if (filters.MealType != null)
+            {
+                query = query.Where(r => r.MealType == filters.MealType);
+            }
+
+            if (!string.IsNullOrWhiteSpace(filters.Ingredient))
+            {
+                query = query.Where(r => r.Ingredients.Contains(filters.Ingredient));
+            }
+
+            if (filters.FavoritesOnly)
+            {
+                query = query.Where(r => r.IsFavorite);
+            }
+
+            filters.Recipes = await query.OrderByDescending(r => r.IsFavorite).ThenBy(r => r.Name).ToListAsync();
+
+            return View(filters);
         }
 
         [HttpGet]
@@ -126,6 +149,28 @@ namespace EjerciciosMVC.Web.Controllers
             await _context.SaveChangesAsync();
 
             TempData["Success"] = "Receta eliminada";
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ToggleFavorite(int id, string? returnUrl)
+        {
+            Recipe? recipe = await _context.Recipes.FindAsync(id);
+
+            if (recipe == null)
+            {
+                return NotFound();
+            }
+
+            recipe.IsFavorite = !recipe.IsFavorite;
+            await _context.SaveChangesAsync();
+
+            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+
             return RedirectToAction(nameof(Index));
         }
 

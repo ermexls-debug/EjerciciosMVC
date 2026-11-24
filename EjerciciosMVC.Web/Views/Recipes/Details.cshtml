@@ -5,6 +5,9 @@
 
     string[] ingredients = Model.Ingredients.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
     string[] steps = Model.Instructions.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+    string shareLink = Url.Action("Details", "Recipes", new { id = Model.Id }, Context.Request.Scheme)!;
+    string whatsAppLink = "https://wa.me/?text=" + Uri.EscapeDataString("Mira esta receta: " + Model.Name + " " + shareLink);
 }
 
 <h1>@Model.Name</h1>
@@ -14,6 +17,7 @@
 <p>
     <span class="badge bg-info text-dark">@Html.DisplayFor(m => m.MealType)</span>
     <span class="ms-2">@Model.PrepMinutes minutos · @Model.Servings porciones</span>
+    <span class="ms-2"><partial name="_FavoriteButton" model="Model" /></span>
 </p>
 
 <div class="row">
@@ -37,6 +41,17 @@
     </div>
 </div>
 
+<div class="card mt-3" style="max-width: 640px;">
+    <div class="card-body">
+        <h5>Compartir receta</h5>
+        <div class="input-group mb-2">
+            <input type="text" id="shareLink" class="form-control" value="@shareLink" readonly />
+            <button type="button" id="copyButton" class="btn btn-outline-secondary">Copiar enlace</button>
+        </div>
+        <a href="@whatsAppLink" target="_blank" rel="noopener" class="btn btn-sm btn-success">Compartir por WhatsApp</a>
+    </div>
+</div>
+
 <div class="d-flex gap-2 mt-3">
     <a asp-action="Index" class="btn btn-outline-secondary">Volver</a>
     <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-primary">Editar</a>
@@ -44,3 +59,16 @@
         <button type="submit" class="btn btn-outline-danger">Eliminar</button>
     </form>
 </div>
+
+@section Scripts {
+    <script>
+        document.getElementById("copyButton").addEventListener("click", function () {
+            const button = this;
+            const link = document.getElementById("shareLink").value;
+
+            navigator.clipboard.writeText(link).then(function () {
+                button.textContent = "¡Copiado!";
+            });
+        });
+    </script>
+}

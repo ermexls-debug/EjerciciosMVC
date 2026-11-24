@@ -1,4 +1,4 @@
-@model List<Recipe>
+@model RecipeListViewModel
 
 @{
     ViewData["Title"] = "Recetas";
@@ -12,14 +12,41 @@
     <a asp-action="Create" class="btn btn-primary">Nueva receta</a>
 </div>
 
-@if (Model.Count == 0)
+<form asp-action="Index" method="get" class="row g-2 mb-4 align-items-end">
+    <div class="col-md-3">
+        <label asp-for="Search" class="form-label"></label>
+        <input asp-for="Search" class="form-control" placeholder="Ej: arroz" />
+    </div>
+    <div class="col-md-3">
+        <label asp-for="MealType" class="form-label"></label>
+        <select asp-for="MealType" asp-items="Html.GetEnumSelectList<MealType>()" class="form-select">
+            <option value="">Todos</option>
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label asp-for="Ingredient" class="form-label"></label>
+        <input asp-for="Ingredient" class="form-control" placeholder="Ej: queso" />
+    </div>
+    <div class="col-md-3">
+        <div class="form-check mb-2">
+            <input asp-for="FavoritesOnly" class="form-check-input" />
+            <label asp-for="FavoritesOnly" class="form-check-label"></label>
+        </div>
+        <button type="submit" class="btn btn-outline-primary">Filtrar</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Limpiar</a>
+    </div>
+</form>
+
+@if (Model.Recipes.Count == 0)
 {
-    <p class="text-muted">No hay recetas.</p>
+    <p class="text-muted">No se encontraron recetas con esos filtros.</p>
 }
 else
 {
+    <p>Recetas encontradas: <strong>@Model.Recipes.Count</strong></p>
+
     <div class="row">
-        @foreach (Recipe recipe in Model)
+        @foreach (Recipe recipe in Model.Recipes)
         {
             <div class="col-md-4 mb-3">
                 <div class="card h-100">
@@ -28,8 +55,9 @@ else
                         <h5 class="card-title">@recipe.Name</h5>
                         <p class="card-text text-muted mb-0">@recipe.PrepMinutes minutos · @recipe.Servings porciones</p>
                     </div>
-                    <div class="card-footer">
+                    <div class="card-footer d-flex justify-content-between">
                         <a asp-action="Details" asp-route-id="@recipe.Id" class="btn btn-sm btn-outline-primary">Ver receta</a>
+                        <partial name="_FavoriteButton" model="recipe" />
                     </div>
                 </div>
             </div>
