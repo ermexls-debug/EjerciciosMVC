@@ -25,6 +25,8 @@ namespace EjerciciosMVC.Web.Data
 
         public DbSet<GameScore> GameScores { get; set; }
 
+        public DbSet<Recipe> Recipes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -32,6 +34,7 @@ namespace EjerciciosMVC.Web.Data
             ConfigureNotes(modelBuilder);
             ConfigureExpenses(modelBuilder);
             ConfigureReservations(modelBuilder);
+            ConfigureRecipes(modelBuilder);
         }
 
         private void ConfigureNotes(ModelBuilder modelBuilder)
@@ -76,6 +79,61 @@ namespace EjerciciosMVC.Web.Data
                 new Service { Id = 3, Name = "Corte y barba", DurationMinutes = 60, Price = 35000 },
                 new Service { Id = 4, Name = "Manicure", DurationMinutes = 60, Price = 30000 },
                 new Service { Id = 5, Name = "Masaje relajante", DurationMinutes = 90, Price = 80000 });
+        }
+
+        private void ConfigureRecipes(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Recipe>().HasIndex(r => r.Name);
+
+            modelBuilder.Entity<Recipe>().HasData(
+                new Recipe
+                {
+                    Id = 1,
+                    Name = "Arepas con queso",
+                    MealType = MealType.Breakfast,
+                    Ingredients = "2 tazas de harina de maíz precocida\n2 tazas de agua tibia\n1 taza de queso rallado\nSal al gusto\nMantequilla",
+                    Instructions = "Mezclar la harina con el agua y la sal hasta formar una masa suave.\nAgregar el queso y amasar.\nFormar las arepas y asarlas a fuego medio 5 minutos por lado.\nServir con mantequilla.",
+                    PrepMinutes = 25,
+                    Servings = 4,
+                    IsFavorite = true,
+                    CreatedAt = new DateTime(2026, 11, 1)
+                },
+                new Recipe
+                {
+                    Id = 2,
+                    Name = "Arroz con pollo",
+                    MealType = MealType.Lunch,
+                    Ingredients = "2 tazas de arroz\n1 pechuga de pollo desmechada\n1 zanahoria picada\n1 taza de arveja\n1 pimentón\n1 cebolla\n4 tazas de caldo de pollo",
+                    Instructions = "Sofreír la cebolla y el pimentón.\nAgregar el arroz y revolver 2 minutos.\nAgregar el caldo, la zanahoria y la arveja.\nCuando seque, agregar el pollo, tapar y cocinar a fuego bajo 15 minutos.",
+                    PrepMinutes = 50,
+                    Servings = 5,
+                    IsFavorite = false,
+                    CreatedAt = new DateTime(2026, 11, 1)
+                },
+                new Recipe
+                {
+                    Id = 3,
+                    Name = "Ensalada de frutas",
+                    MealType = MealType.Dessert,
+                    Ingredients = "1 papaya\n2 bananos\n1 mango\n1 taza de fresas\nCrema de leche\nQueso rallado",
+                    Instructions = "Picar todas las frutas en cubos.\nMezclar en un recipiente.\nServir con crema de leche y queso rallado por encima.",
+                    PrepMinutes = 15,
+                    Servings = 4,
+                    IsFavorite = false,
+                    CreatedAt = new DateTime(2026, 11, 1)
+                },
+                new Recipe
+                {
+                    Id = 4,
+                    Name = "Huevos pericos",
+                    MealType = MealType.Dinner,
+                    Ingredients = "4 huevos\n1 tomate picado\n2 tallos de cebolla larga\nSal\nAceite",
+                    Instructions = "Sofreír la cebolla y el tomate en aceite.\nAgregar los huevos batidos con sal.\nRevolver hasta que estén cocidos.",
+                    PrepMinutes = 10,
+                    Servings = 2,
+                    IsFavorite = true,
+                    CreatedAt = new DateTime(2026, 11, 1)
+                });
         }
     }
 }

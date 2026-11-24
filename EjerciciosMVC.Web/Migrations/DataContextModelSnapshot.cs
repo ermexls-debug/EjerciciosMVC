@@ -224,6 +224,101 @@ namespace EjerciciosMVC.Web.Migrations
                         });
                 });
 
+            modelBuilder.Entity("EjerciciosMVC.Web.Data.Entities.Recipe", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Ingredients")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<string>("Instructions")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<bool>("IsFavorite")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MealType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("PrepMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Servings")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name");
+
+                    b.ToTable("Recipes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2026, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ingredients = "2 tazas de harina de maíz precocida\n2 tazas de agua tibia\n1 taza de queso rallado\nSal al gusto\nMantequilla",
+                            Instructions = "Mezclar la harina con el agua y la sal hasta formar una masa suave.\nAgregar el queso y amasar.\nFormar las arepas y asarlas a fuego medio 5 minutos por lado.\nServir con mantequilla.",
+                            IsFavorite = true,
+                            MealType = 1,
+                            Name = "Arepas con queso",
+                            PrepMinutes = 25,
+                            Servings = 4
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2026, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ingredients = "2 tazas de arroz\n1 pechuga de pollo desmechada\n1 zanahoria picada\n1 taza de arveja\n1 pimentón\n1 cebolla\n4 tazas de caldo de pollo",
+                            Instructions = "Sofreír la cebolla y el pimentón.\nAgregar el arroz y revolver 2 minutos.\nAgregar el caldo, la zanahoria y la arveja.\nCuando seque, agregar el pollo, tapar y cocinar a fuego bajo 15 minutos.",
+                            IsFavorite = false,
+                            MealType = 2,
+                            Name = "Arroz con pollo",
+                            PrepMinutes = 50,
+                            Servings = 5
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2026, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ingredients = "1 papaya\n2 bananos\n1 mango\n1 taza de fresas\nCrema de leche\nQueso rallado",
+                            Instructions = "Picar todas las frutas en cubos.\nMezclar en un recipiente.\nServir con crema de leche y queso rallado por encima.",
+                            IsFavorite = false,
+                            MealType = 4,
+                            Name = "Ensalada de frutas",
+                            PrepMinutes = 15,
+                            Servings = 4
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(2026, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Ingredients = "4 huevos\n1 tomate picado\n2 tallos de cebolla larga\nSal\nAceite",
+                            Instructions = "Sofreír la cebolla y el tomate en aceite.\nAgregar los huevos batidos con sal.\nRevolver hasta que estén cocidos.",
+                            IsFavorite = true,
+                            MealType = 3,
+                            Name = "Huevos pericos",
+                            PrepMinutes = 10,
+                            Servings = 2
+                        });
+                });
+
             modelBuilder.Entity("EjerciciosMVC.Web.Data.Entities.Reservation", b =>
                 {
                     b.Property<int>("Id")
