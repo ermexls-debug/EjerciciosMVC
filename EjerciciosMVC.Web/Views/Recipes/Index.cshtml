@@ -1,0 +1,38 @@
+@model List<Recipe>
+
+@{
+    ViewData["Title"] = "Recetas";
+}
+
+<h1>Recetas</h1>
+
+<partial name="_Messages" />
+
+<div class="mb-3">
+    <a asp-action="Create" class="btn btn-primary">Nueva receta</a>
+</div>
+
+@if (Model.Count == 0)
+{
+    <p class="text-muted">No hay recetas.</p>
+}
+else
+{
+    <div class="row">
+        @foreach (Recipe recipe in Model)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <span class="badge bg-info text-dark mb-2">@Html.DisplayFor(m => recipe.MealType)</span>
+                        <h5 class="card-title">@recipe.Name</h5>
+                        <p class="card-text text-muted mb-0">@recipe.PrepMinutes minutos · @recipe.Servings porciones</p>
+                    </div>
+                    <div class="card-footer">
+                        <a asp-action="Details" asp-route-id="@recipe.Id" class="btn btn-sm btn-outline-primary">Ver receta</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

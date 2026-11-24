@@ -1,0 +1,61 @@
+@model RecipeFormViewModel
+
+@{
+    ViewData["Title"] = "Editar receta";
+}
+
+<h1>Editar receta</h1>
+
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Id" />
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="MealType" class="form-label"></label>
+                    <select asp-for="MealType" asp-items="Html.GetEnumSelectList<MealType>()" class="form-select">
+                        <option value="">-- Seleccione --</option>
+                    </select>
+                    <span asp-validation-for="MealType" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label asp-for="PrepMinutes" class="form-label"></label>
+                    <input asp-for="PrepMinutes" class="form-control" type="number" step="1" />
+                    <span asp-validation-for="PrepMinutes" class="text-danger"></span>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Servings" class="form-label"></label>
+                    <input asp-for="Servings" class="form-control" type="number" step="1" />
+                    <span asp-validation-for="Servings" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Ingredients" class="form-label"></label>
+                <textarea asp-for="Ingredients" class="form-control" rows="6"></textarea>
+                <span asp-validation-for="Ingredients" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Instructions" class="form-label"></label>
+                <textarea asp-for="Instructions" class="form-control" rows="8"></textarea>
+                <span asp-validation-for="Instructions" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+            <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
