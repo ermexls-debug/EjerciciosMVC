@@ -1,8 +1,92 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@{
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">EjerciciosMVC</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center mb-4">
+    <h1 class="display-5">Ejercicios MVC</h1>
+    <p class="lead">Ejercicios de arquitectura MVC con ASP.NET Core, Entity Framework y SQL Server</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">1. Lista de tareas</h5>
+                <p class="card-text">Agregar, completar y eliminar tareas guardadas en la base de datos.</p>
+            </div>
+            <div class="card-footer"><a asp-controller="ToDoTasks" asp-action="Index" class="btn btn-sm btn-primary">Abrir</a></div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">2. Calculadora de propinas</h5>
+                <p class="card-text">Calcula la propina y el total a partir del valor de la cuenta y el porcentaje.</p>
+            </div>
+            <div class="card-footer"><a asp-controller="TipCalculator" asp-action="Index" class="btn btn-sm btn-primary">Abrir</a></div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">3. Generador de contraseñas</h5>
+                <p class="card-text">Genera contraseñas seguras con la longitud y los tipos de caracteres escogidos.</p>
+            </div>
+            <div class="card-footer"><a asp-controller="PasswordGenerator" asp-action="Index" class="btn btn-sm btn-primary">Abrir</a></div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">4. Gestor de gastos</h5>
+                <p class="card-text">Registra gastos diarios por categoría y muestra el resumen de cada mes.</p>
+            </div>
+            <div class="card-footer"><a asp-controller="Expenses" asp-action="Index" class="btn btn-sm btn-primary">Abrir</a></div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">5. Sistema de reservas</h5>
+                <p class="card-text">Muestra los horarios disponibles, permite reservar y confirmar la cita.</p>
+            </div>
+            <div class="card-footer"><a asp-controller="Reservations" asp-action="Index" class="btn btn-sm btn-primary">Abrir</a></div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">6. Gestor de notas</h5>
+                <p class="card-text">Notas organizadas por categorías, con búsqueda por título o contenido.</p>
+            </div>
+            <div class="card-footer"><a asp-controller="Notes" asp-action="Index" class="btn btn-sm btn-primary">Abrir</a></div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">8. Plataforma de recetas</h5>
+                <p class="card-text">Buscar, filtrar, guardar como favoritas y compartir recetas de cocina.</p>
+            </div>
+            <div class="card-footer"><a asp-controller="Recipes" asp-action="Index" class="btn btn-sm btn-primary">Abrir</a></div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">9. Juego de memoria</h5>
+                <p class="card-text">Emparejar cartas en tres niveles de dificultad, con tabla de mejores puntajes.</p>
+            </div>
+            <div class="card-footer"><a asp-controller="MemoryGame" asp-action="Index" class="btn btn-sm btn-primary">Abrir</a></div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">11. Cronómetro</h5>
+                <p class="card-text">Cronómetro con inicio, pausa, reinicio y registro de vueltas.</p>
+            </div>
+            <div class="card-footer"><a asp-controller="Stopwatch" asp-action="Index" class="btn btn-sm btn-primary">Abrir</a></div>
+        </div>
+    </div>
 </div>
